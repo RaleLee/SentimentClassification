@@ -1,0 +1,4 @@
+Keras==2.3.1
+numpy==1.17.3
+gensim==3.8.3
+pyltp==0.2.1

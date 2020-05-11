@@ -8,6 +8,7 @@ LTP_DATA_DIR = "D:/Course/IR/ltp_data_v3.4.0"
 STOP_WORDS_PATH = "train_data/stopwords.txt"
 POS_DATA_PATH = "train_data/sample.positive.txt"
 NEG_DATA_PATH = "train_data/sample.negative.txt"
+TEST_DATA_PATH = "test_data/test.txt"
 CWS_MODEL_PATH = os.path.join(LTP_DATA_DIR, "cws.model")
 
 
@@ -70,16 +71,14 @@ def load_data():
     segmentor.load(CWS_MODEL_PATH)
     pos_data = seg(stop_words, load_text(POS_DATA_PATH), segmentor)
     neg_data = seg(stop_words, load_text(NEG_DATA_PATH), segmentor)
+    test_data = seg(stop_words, load_text(TEST_DATA_PATH), segmentor)
     segmentor.release()
     full_data = np.concatenate((pos_data, neg_data))
     labels = np.concatenate((np.ones(len(pos_data)), np.zeros(len(neg_data))))
-    return full_data, labels
+    return full_data, labels, test_data
 
 
 if __name__ == "__main__":
-    full, label = load_data()
-    with open("train_data/test.txt", "w", encoding="utf-8") as f:
-        for i in range(len(full)):
-            f.write(str(full[i]) + "\n")
+    full, label, test = load_data()
 
 
