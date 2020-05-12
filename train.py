@@ -13,7 +13,7 @@ RESULT_DIR = "Save"
 def train(nums, embedding_weights, train_data, train_label, test_data):
     train_model = Sequential()
     # Embedding层
-    Embedding_layer = Embedding(output_dim=300, input_dim=nums, mask_zero=True,
+    Embedding_layer = Embedding(output_dim=100, input_dim=nums, mask_zero=True,
                                 weights=[embedding_weights], input_length=100)
     train_model.add(Embedding_layer)
     # LSTM层
@@ -30,7 +30,7 @@ def train(nums, embedding_weights, train_data, train_label, test_data):
     # 其实应该使用macro-f1训练会更好
     train_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    train_model.fit(train_data, train_label, batch_size=32, epochs=5, verbose=1)
+    train_model.fit(train_data, train_label, batch_size=16, epochs=5, verbose=1)
 
     ret = train_model.predict_classes(test_data)
     return ret
